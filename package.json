@@ -1,0 +1,32 @@
+{
+  "name": "CampusConnect",
+  "version": "1.0.0",
+  "description": "A comprehensive MERN Stack application for managing university student clubs, events, and community engagement.",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
+    "build": "npm run build --workspace=server && npm run build --workspace=client",
+    "install-all": "npm install && npm install --workspace=server && npm install --workspace=client",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/CampusConnect.git"
+  },
+  "keywords": [
+    "MERN",
+    "university",
+    "clubs",
+    "community",
+    "events",
+    "real-time"
+  ],
+  "author": "CampusConnect Team",
+  "license": "MIT"
+}
