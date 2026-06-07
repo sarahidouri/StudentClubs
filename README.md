@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-CampusConnect is a full-stack web application designed for students to discover clubs, register for upcoming events, and participate in real-time dynamic chat rooms within individual clubs. The platform supports Club Manager and Student roles, enabling authenticated access, club management, event planning, and persistent chat history.
+Student Clubs is a full-stack web application designed for students to discover clubs, register for upcoming events, and participate in real-time dynamic chat rooms within individual clubs. The platform supports Club Manager and Student roles, enabling authenticated access, club management, event planning, and persistent chat history.
 
 ## Tech Stack
 

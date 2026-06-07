@@ -1,5 +1,5 @@
 {
-  "name": "CampusConnect",
+  "name": "StudentClubs",
   "version": "1.0.0",
   "description": "A comprehensive MERN Stack application for managing university student clubs, events, and community engagement.",
   "private": true,
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/CampusConnect.git"
+    "url": "https://github.com/yourusername/StudentClubs.git"
   },
   "keywords": [
     "MERN",
@@ -28,6 +28,6 @@
     "events",
     "real-time"
   ],
-  "author": "CampusConnect Team",
+  "author": "StudentClubs Team",
   "license": "MIT"
 }
