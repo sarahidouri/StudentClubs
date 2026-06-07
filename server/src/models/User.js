@@ -63,6 +63,12 @@ const userSchema = new mongoose.Schema(
         ref: 'Club',
       },
     ],
+    registeredEvents: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event',
+      },
+    ],
     googleId: String,
     isVerified: {
       type: Boolean,
@@ -83,7 +89,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Hash password before saving
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   
@@ -96,12 +102,12 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-// Method to compare passwords
+
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Virtual for full name
+
 userSchema.virtual('fullName').get(function () {
   return `${this.firstName} ${this.lastName}`;
 });

@@ -14,11 +14,11 @@ import { authorizeClubManager } from '../middleware/roleMiddleware.js';
 
 const router = express.Router();
 
-// Public routes
+
 router.get('/', optionalAuth, getAllClubsController);
 router.get('/:id', optionalAuth, getClubController);
 
-// Protected routes
+
 router.post('/', authMiddleware, authorizeClubManager, createClubController);
 router.put('/:id', authMiddleware, authorizeClubManager, updateClubController);
 router.post('/:id/join', authMiddleware, joinClubController);

@@ -1,123 +1,101 @@
-# CampusConnect 🎓
+# CampusConnect (Student Clubs & Events Platform)
 
-A comprehensive MERN Stack application for managing university student clubs, events, and community engagement.
+## Project Overview
 
-## Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Project Structure](#project-structure)
-- [Installation](#installation)
-- [Environment Setup](#environment-setup)
-- [Running the Application](#running-the-application)
-- [Docker Deployment](#docker-deployment)
-- [API Documentation](#api-documentation)
-- [User Roles](#user-roles)
-- [Contributing](#contributing)
-
-## Features
-
-### Core Features
-- ✅ **User Authentication**: JWT-based authentication with Google OAuth integration
-- ✅ **Role-based Access Control**: Student, Club Manager, and Admin roles
-- ✅ **Club Management**: Create, manage, and join student clubs
-- ✅ **Event Management**: Create, schedule, and manage campus events
-- ✅ **Real-time Chat**: Socket.io-powered direct and group messaging
-- ✅ **Notifications**: Real-time notifications for events, posts, and messages
-- ✅ **Social Features**: Posts, comments, likes, and community engagement
-- ✅ **Image Management**: Cloudinary integration for image uploads
-- ✅ **Activity Logging**: Track user actions and admin activities
-- ✅ **Email Notifications**: Nodemailer integration for email communications
-
-### Dashboard Features
-- Student Dashboard: View joined clubs, upcoming events, messages
-- Club Manager Dashboard: Manage club members, create events, post updates
-- Admin Dashboard: User management, moderation, activity logs
+CampusConnect is a full-stack web application designed for students to discover clubs, register for upcoming events, and participate in real-time dynamic chat rooms within individual clubs. The platform supports Club Manager and Student roles, enabling authenticated access, club management, event planning, and persistent chat history.
 
 ## Tech Stack
 
-### Backend
-- **Runtime**: Node.js
-- **Framework**: Express.js
-- **Database**: MongoDB with Mongoose ODM
-- **Authentication**: JWT, Passport.js, Google OAuth
-- **Real-time**: Socket.io
-- **Image Storage**: Cloudinary
-- **Email**: Nodemailer
-- **Security**: Helmet, CORS, Rate Limiting
-- **Deployment**: Docker, Docker Compose
+- **Frontend:** React.js, Tailwind CSS, Socket.io-client, Vite
+- **Backend:** Node.js, Express.js, MongoDB (Mongoose), Socket.io, Nodemon
 
-### Frontend
-- **Library**: React 18
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **HTTP Client**: Axios
-- **State Management**: Zustand
-- **Real-time**: Socket.io Client
-- **Routing**: React Router v6
-- **UI Components**: Headless UI, Lucide React
-- **Notifications**: React Hot Toast
+## Core Features
 
-## Architecture
+- ✅ Fully functional authentication with Manager and Student roles
+- ✅ Club creation, browsing, and category filtering
+- ✅ Event creation, listing, and registration
+- ✅ Real-time club chat with automatic scrolling and persistent history
+- ✅ Role-based access control for club managers
 
-```
-CampusConnect/
-├── server/
-│   ├── src/
-│   │   ├── config/          # Configuration files
-│   │   ├── controllers/      # Route controllers
-│   │   ├── middleware/       # Express middleware
-│   │   ├── models/           # MongoDB schemas
-│   │   ├── routes/           # API routes
-│   │   ├── services/         # Business logic
-│   │   ├── sockets/          # Socket.io configuration
-│   │   ├── utils/            # Utility functions
-│   │   └── index.js          # Entry point
-│   ├── Dockerfile
-│   ├── package.json
-│   └── .env.example
-│
-├── client/
-│   ├── src/
-│   │   ├── components/       # Reusable components
-│   │   ├── context/          # React Context
-│   │   ├── hooks/            # Custom hooks
-│   │   ├── pages/            # Page components
-│   │   ├── services/         # API services
-│   │   ├── styles/           # Global styles
-│   │   ├── utils/            # Utility functions
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── Dockerfile
-│   ├── index.html
-│   ├── tailwind.config.js
-│   ├── vite.config.js
-│   ├── package.json
-│   └── .env.example
-│
-├── docker-compose.yml
-├── .gitignore
-└── README.md
-```
-
-## Installation
+## Installation & Setup Guide
 
 ### Prerequisites
-- Node.js 18+
-- MongoDB 6+
-- Docker & Docker Compose (for containerized deployment)
-- npm or yarn
 
-### Local Setup
+- Node.js installed locally
+- MongoDB running locally
 
-1. **Clone the repository**
+### Backend Setup
+
+1. Navigate to the backend folder:
    ```bash
-   cd CampusConnect
+   cd server
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Seed the database with default clubs, events, and manager credentials:
+   ```bash
+   npm run seed
+   ```
+4. Start the backend development server:
+   ```bash
+   npm run dev
    ```
 
-2. **Backend Setup**
+### Frontend Setup
+
+1. Navigate to the frontend folder:
    ```bash
+   cd client
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the frontend development server:
+   ```bash
+   npm run dev
+   ```
+
+## Default Credentials for Grading
+
+- **Role:** Club Manager
+- **Email:** `manager@studentclubs.com`
+- **Password:** `123456`
+
+## Notes for the Professor
+
+- MongoDB must be running before seeding and starting the backend.
+- Use the default manager credentials to verify club creation, event management, and chat functionality.
+- The chat interface supports real-time messaging through Socket.io and updates immediately within joined club rooms.
+
+## Project Structure
+
+- `server/` — Backend API server, routes, and database models
+- `client/` — Frontend React application with Tailwind UI and real-time chat
+- `docker-compose.yml` — Optional Docker deployment setup
+- `README.md` — Project documentation
+
+## Useful Commands
+
+```bash
+# Backend
+cd server
+npm install
+npm run seed
+npm run dev
+
+# Frontend
+cd client
+npm install
+npm run dev
+```
+
+## Contact
+
+Please review the project and reach out if any clarifications are needed for grading or demonstration.
+
    cd server
    npm install
    cp .env.example .env
@@ -136,7 +114,7 @@ CampusConnect/
 ### Backend (.env)
 ```env
 # Database
-MONGODB_URI=mongodb://localhost:27017/campusconnect
+MONGODB_URI=mongodb://localhost:27017/studentclubs
 
 # Server
 PORT=5000
@@ -478,7 +456,7 @@ This project is licensed under the MIT License - see LICENSE file for details.
 
 For issues, questions, or feedback:
 - Open an issue on GitHub
-- Contact: support@campusconnect.com
+- Contact: support@studentclubs.com
 
 ## Roadmap
 
@@ -493,4 +471,4 @@ For issues, questions, or feedback:
 
 ---
 
-**CampusConnect** - Connecting Your Campus Community 🎓
+**StudentClubs** - Connecting Your Campus Community 🎓

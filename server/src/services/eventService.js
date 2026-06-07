@@ -1,4 +1,5 @@
 import Event from '../models/Event.js';
+import User from '../models/User.js';
 
 export const eventService = {
   async createEvent(eventData, clubId, userId) {
@@ -89,7 +90,13 @@ export const eventService = {
       event.attendees.push({ user: userId, status });
     }
 
-    return await event.save();
+    const updatedEvent = await event.save();
+
+    await User.findByIdAndUpdate(userId, {
+      $addToSet: { registeredEvents: updatedEvent._id },
+    });
+
+    return updatedEvent;
   },
 
   async cancelEventRegistration(eventId, userId) {
@@ -97,6 +104,12 @@ export const eventService = {
     if (!event) throw new Error('Event not found');
 
     event.attendees = event.attendees.filter((a) => a.user.toString() !== userId);
-    return await event.save();
+    const updatedEvent = await event.save();
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { registeredEvents: updatedEvent._id },
+    });
+
+    return updatedEvent;
   },
 };

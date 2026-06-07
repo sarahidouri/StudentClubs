@@ -4,17 +4,18 @@ services:
   # MongoDB Database
   mongodb:
     image: mongo:6-alpine
-    container_name: campusconnect-mongodb
+    container_name: studentclubs-mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: mongodb123
-      MONGO_INITDB_DB: campusconnect
+      MONGO_INITDB_DB: studentclubs
     ports:
       - '27017:27017'
     volumes:
       - mongodb_data:/data/db
     networks:
-      - campusconnect-network
+      - studentclubs-network
+      - studentclubs-network
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
       interval: 10s
@@ -26,12 +27,12 @@ services:
     build:
       context: .
       dockerfile: server/Dockerfile
-    container_name: campusconnect-backend
+    container_name: studentclubs-backend
     environment:
       NODE_ENV: production
       PORT: 5000
-      MONGODB_URI: mongodb://admin:mongodb123@mongodb:27017/campusconnect
-      MONGODB_TEST_URI: mongodb://admin:mongodb123@mongodb:27017/campusconnect_test
+      MONGODB_URI: mongodb://admin:mongodb123@mongodb:27017/studentclubs
+      MONGODB_TEST_URI: mongodb://admin:mongodb123@mongodb:27017/studentclubs_test
       CLIENT_URL: http://localhost:3000
       JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_key_change_this_in_production}
       JWT_EXPIRE: 7d
@@ -70,7 +71,7 @@ services:
     build:
       context: .
       dockerfile: client/Dockerfile
-    container_name: campusconnect-frontend
+    container_name: studentclubs-frontend
     environment:
       VITE_API_URL: http://localhost:5000/api
       VITE_SOCKET_URL: http://localhost:5000
@@ -79,7 +80,7 @@ services:
     depends_on:
       - backend
     networks:
-      - campusconnect-network
+      - studentclubs-network
     restart: unless-stopped
 
 volumes:
@@ -87,5 +88,5 @@ volumes:
     driver: local
 
 networks:
-  campusconnect-network:
+  studentclubs-network:
     driver: bridge

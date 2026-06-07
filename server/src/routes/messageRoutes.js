@@ -10,7 +10,7 @@ import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Protected routes
+
 router.post('/', authMiddleware, sendMessageController);
 router.get('/direct/:otherId', authMiddleware, getDirectMessagesController);
 router.get('/club/:clubId', authMiddleware, getClubMessagesController);

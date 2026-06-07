@@ -30,7 +30,7 @@ export const LoginPage = () => {
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-2">Welcome Back</h1>
         <p className="text-center text-gray-600 mb-8">
-          Login to your CampusConnect account
+          Login to your StudentClubs account
         </p>
 
         {error && (
@@ -111,7 +111,7 @@ export const RegisterPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center py-12 px-4">
       <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-2">Join CampusConnect</h1>
+        <h1 className="text-3xl font-bold text-center mb-2">Join StudentClubs</h1>
         <p className="text-center text-gray-600 mb-8">Create your account to get started</p>
 
         {error && (

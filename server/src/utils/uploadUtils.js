@@ -1,9 +1,9 @@
 import { cloudinary } from '../config/cloudinary.js';
 
-export const uploadImage = async (file, folder = 'campusconnect') => {
+export const uploadImage = async (file, folder = 'studentclubs') => {
   try {
     const result = await cloudinary.uploader.upload(file, {
-      folder: `campusconnect/${folder}`,
+      folder: `studentclubs/${folder}`,
       resource_type: 'auto',
     });
     return result.secure_url;
@@ -20,12 +20,12 @@ export const deleteImage = async (publicId) => {
   }
 };
 
-export const uploadMultipleImages = async (files, folder = 'campusconnect') => {
+export const uploadMultipleImages = async (files, folder = 'studentclubs') => {
   try {
     const results = await Promise.all(
       files.map((file) =>
         cloudinary.uploader.upload(file, {
-          folder: `campusconnect/${folder}`,
+          folder: `studentclubs/${folder}`,
           resource_type: 'auto',
         })
       )

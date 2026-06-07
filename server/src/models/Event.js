@@ -23,10 +23,17 @@ const eventSchema = new mongoose.Schema(
     },
     endDate: {
       type: Date,
-      required: true,
+      
     },
     location: String,
-    thumbnail: String,
+    thumbnail: {
+      type: String,
+      default: 'https://images.unsplash.com/photo-1511578314322-379afb476865',
+    },
+    image: {
+      type: String,
+      default: 'https://images.unsplash.com/photo-1511578314322-379afb476865',
+    },
     attendees: [
       {
         user: {
@@ -44,7 +51,10 @@ const eventSchema = new mongoose.Schema(
         },
       },
     ],
-    capacity: Number,
+    capacity: {
+      type: Number,
+      default: 0,
+    },
     registrationDeadline: Date,
     status: {
       type: String,
@@ -55,7 +65,10 @@ const eventSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    tags: [String],
+    tags: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

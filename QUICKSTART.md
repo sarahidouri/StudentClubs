@@ -1,4 +1,4 @@
-# CampusConnect - Quick Start Guide 🚀
+# StudentClubs - Quick Start Guide 🚀
 
 ## 5-Minute Setup
 
@@ -85,7 +85,7 @@ EMAIL_PASSWORD=your_app_password
 ## Project Structure at a Glance
 
 ```
-CampusConnect/
+StudentClubs/
 ├── server/              # Backend (Node.js + Express)
 │   ├── src/
 │   │   ├── models/      # Database schemas
@@ -240,7 +240,7 @@ Create test accounts with these credentials:
 lsof -ti:5000 | xargs kill -9
 
 # Check MongoDB connection
-mongosh mongodb://localhost:27017/campusconnect
+mongosh mongodb://localhost:27017/studentclubs
 
 # Check .env file exists
 ls -la server/.env
@@ -275,7 +275,7 @@ docker-compose up
 mongod
 
 # Or using Docker
-docker run -d -p 27017:27017 --name campusconnect-mongo mongo:6-alpine
+docker run -d -p 27017:27017 --name studentclubs-mongo mongo:6-alpine
 ```
 
 ## Next Steps
@@ -319,7 +319,7 @@ docker run -d -p 27017:27017 --name campusconnect-mongo mongo:6-alpine
 ```bash
 # Clone and setup
 git clone <repo>
-cd CampusConnect
+cd StudentClubs
 
 # Development
 docker-compose up

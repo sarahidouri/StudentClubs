@@ -1,14 +1,42 @@
 import Post from '../models/Post.js';
+import Club from '../models/Club.js';
+import mongoose from 'mongoose';
 
 export const postService = {
   async createPost(postData, authorId, clubId) {
+    if (!mongoose.Types.ObjectId.isValid(clubId)) {
+      const error = new Error('Invalid club id');
+      error.status = 400;
+      throw error;
+    }
+
+    const content = postData.content?.trim();
+    if (!content) {
+      const error = new Error('Post content is required');
+      error.status = 400;
+      throw error;
+    }
+
+    const club = await Club.findOne({ _id: clubId, isActive: true });
+    if (!club) {
+      const error = new Error('Club not found');
+      error.status = 404;
+      throw error;
+    }
+
     const post = new Post({
       ...postData,
+      content,
       author: authorId,
       club: clubId,
     });
 
-    return await post.save();
+    await post.save();
+
+    return await post.populate([
+      { path: 'author', select: 'firstName lastName profileImage' },
+      { path: 'club', select: 'name' },
+    ]);
   },
 
   async getPostById(postId) {

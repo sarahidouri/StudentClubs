@@ -13,7 +13,7 @@ export const HomePage = () => {
       <div className="bg-gradient-to-br from-primary via-purple-500 to-secondary text-white py-20">
         <div className="container-custom text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Welcome to CampusConnect 🎓
+            Welcome to StudentClubs 🎓
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             Connect with students, join clubs, and experience campus life like never before
@@ -54,7 +54,7 @@ export const HomePage = () => {
       <div className="py-20 bg-light">
         <div className="container-custom">
           <h2 className="text-4xl font-bold text-center mb-12">
-            Why CampusConnect?
+            Why StudentClubs?
           </h2>
 
           <div className="grid md:grid-cols-4 gap-8">

@@ -13,11 +13,11 @@ import { optionalAuth } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Public routes
+
 router.get('/:id', optionalAuth, getPostController);
 router.get('/club/:clubId/posts', optionalAuth, getClubPostsController);
 
-// Protected routes
+
 router.post('/club/:clubId', authMiddleware, createPostController);
 router.put('/:id', authMiddleware, updatePostController);
 router.delete('/:id', authMiddleware, deletePostController);

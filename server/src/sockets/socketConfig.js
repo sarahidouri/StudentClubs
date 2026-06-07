@@ -12,7 +12,7 @@ export const configureSocket = (server) => {
     },
   });
 
-  // Socket authentication
+  
   io.use((socket, next) => {
     const token = socket.handshake.auth.token;
     if (!token) {
@@ -32,23 +32,23 @@ export const configureSocket = (server) => {
   io.on('connection', (socket) => {
     console.log(`✓ User connected: ${socket.userId} (${socket.id})`);
 
-    // Add user to active users
+    
     activeUsers.set(socket.userId, {
       socketId: socket.id,
       connectedAt: new Date(),
     });
 
-    // Broadcast user status
+    
     io.emit('user-online', {
       userId: socket.userId,
       timestamp: new Date(),
     });
 
-    // Join user room
+    
     socket.join(`user-${socket.userId}`);
     userRooms.set(socket.userId, `user-${socket.userId}`);
 
-    // Direct message event
+    
     socket.on('send-message', (data) => {
       const recipientRoom = `user-${data.receiverId}`;
       io.to(recipientRoom).emit('receive-message', {
@@ -58,7 +58,7 @@ export const configureSocket = (server) => {
       });
     });
 
-    // Club chat event
+    
     socket.on('join-club-chat', (clubId) => {
       socket.join(`club-${clubId}`);
       io.to(`club-${clubId}`).emit('user-joined-club', {
@@ -76,7 +76,7 @@ export const configureSocket = (server) => {
       });
     });
 
-    // Typing indicator
+    
     socket.on('typing', (data) => {
       if (data.type === 'direct') {
         const recipientRoom = `user-${data.recipientId}`;
@@ -105,7 +105,7 @@ export const configureSocket = (server) => {
       }
     });
 
-    // Notification event
+    
     socket.on('send-notification', (data) => {
       const targetRoom = `user-${data.recipientId}`;
       io.to(targetRoom).emit('receive-notification', {
@@ -114,7 +114,7 @@ export const configureSocket = (server) => {
       });
     });
 
-    // Disconnect event
+    
     socket.on('disconnect', () => {
       console.log(`✗ User disconnected: ${socket.userId}`);
       activeUsers.delete(socket.userId);

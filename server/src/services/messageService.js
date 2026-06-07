@@ -43,6 +43,13 @@ export const messageService = {
     );
   },
 
+  async getUnreadCount(userId) {
+    return await Message.countDocuments({
+      receiver: userId,
+      isRead: false,
+    });
+  },
+
   async deleteMessage(messageId) {
     return await Message.findByIdAndDelete(messageId);
   },

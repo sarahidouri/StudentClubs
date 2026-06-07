@@ -1,6 +1,9 @@
+import './config/env.js';
+
+
+
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { configureSocket } from './sockets/socketConfig.js';
 import connectDB from './config/database.js';
@@ -13,29 +16,47 @@ import {
   limiter,
 } from './middleware/securityMiddleware.js';
 
-// Import routes
+
 import authRoutes from './routes/authRoutes.js';
 import clubRoutes from './routes/clubRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
-
-// Load environment variables
-dotenv.config();
+import chatRoutes from './routes/chatRoutes.js';
 
 const app = express();
 const server = createServer(app);
 
-// Configure Socket.io
-configureSocket(server);
+try {
+  
+  configureSocket(server);
+} catch (err) {
+  console.error('❌ Socket.io configuration failed:', err.message);
+}
 
-// Connect to database
-await connectDB();
 
-// Configure Cloudinary
+
+try {
+  await connectDB();
+} catch (err) {
+  console.error('❌ MongoDB Connection Failed:', err.message);
+  console.log('T-akked beli MongoDB khaddam 3ndek (mongod)');
+  process.exit(1);
+}
+
+
+
+
+
+
+
+
+
+
+
 configureCloudinary();
 
-// Middleware
+
 app.use(helmetMiddleware);
 app.use(morganMiddleware);
 app.use(compressionMiddleware);
@@ -49,7 +70,7 @@ app.use(
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Health check route
+
 app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -58,14 +79,26 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API Routes
+
 app.use('/api/auth', authRoutes);
 app.use('/api/clubs', clubRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/chat', chatRoutes);
 
-// 404 handler
+
+app.get('/run-seed', async (req, res) => {
+  try {
+    await seedDatabase();
+    res.send('Database seeded successfully via browser!');
+  } catch (err) {
+    console.error('Run-seed error:', err.message);
+    res.status(500).send(err.message);
+  }
+});
+
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -74,16 +107,15 @@ app.use((req, res) => {
   });
 });
 
-// Error handler middleware (must be last)
+
 app.use(errorHandler);
 
-// Start server
-// const PORT = process.env.PORT || 5000;
-const PORT = process.env.PORT || 5001;
+
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════╗
-║  CampusConnect Server Started 🚀      ║
+║  StudentClubs Server Started 🚀        ║
 ║  Environment: ${process.env.NODE_ENV}        
 ║  Port: ${PORT}
 ║  URL: http://localhost:${PORT}

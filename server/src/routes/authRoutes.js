@@ -12,15 +12,15 @@ import { authorize, authorizeAdmin } from '../middleware/roleMiddleware.js';
 
 const router = express.Router();
 
-// Public routes
+
 router.post('/register', authLimiter, registerController);
 router.post('/login', authLimiter, loginController);
 
-// Protected routes
+
 router.get('/profile', authMiddleware, getProfileController);
 router.put('/profile', authMiddleware, updateProfileController);
 
-// Admin routes
+
 router.get('/users', authMiddleware, authorizeAdmin, getAllUsersController);
 
 export default router;

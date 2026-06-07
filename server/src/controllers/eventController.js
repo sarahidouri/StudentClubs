@@ -4,7 +4,8 @@ import { logActivity } from '../utils/activityLogger.js';
 import { paginate } from '../utils/queryHelpers.js';
 
 export const createEventController = asyncHandler(async (req, res) => {
-  const { clubId } = req.params;
+  
+  const clubId = req.params.clubId || req.body.clubId;
   const event = await eventService.createEvent(req.body, clubId, req.userId);
 
   await logActivity(

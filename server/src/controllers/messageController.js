@@ -56,6 +56,16 @@ export const markMessagesAsReadController = asyncHandler(async (req, res) => {
   });
 });
 
+export const getUnreadCountController = asyncHandler(async (req, res) => {
+  const unreadCount = await messageService.getUnreadCount(req.userId);
+
+  res.json({
+    success: true,
+    message: 'Unread message count retrieved',
+    data: { unreadCount },
+  });
+});
+
 export const deleteMessageController = asyncHandler(async (req, res) => {
   const message = await messageService.deleteMessage(req.params.id);
 

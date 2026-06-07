@@ -4,7 +4,7 @@ export const validateEmail = (email) => {
 };
 
 export const validatePassword = (password) => {
-  // At least 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
+  
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   return regex.test(password);
 };
@@ -15,11 +15,14 @@ export const validatePhoneNumber = (phone) => {
 };
 
 export const sanitizeUserData = (user) => {
-  const {
-    password,
-    verificationToken,
-    __v,
-    ...sanitized
-  } = user._doc || user.toObject?.() || user;
-  return sanitized;
+  const raw = user._doc || user.toObject?.() || user;
+  const sanitized = {
+    ...raw,
+    joinedClubs: Array.isArray(raw.joinedClubs) ? raw.joinedClubs.filter(Boolean) : raw.joinedClubs,
+    managedClubs: Array.isArray(raw.managedClubs) ? raw.managedClubs.filter(Boolean) : raw.managedClubs,
+    registeredEvents: Array.isArray(raw.registeredEvents) ? raw.registeredEvents.filter(Boolean) : raw.registeredEvents,
+  };
+
+  const { password, verificationToken, __v, ...rest } = sanitized;
+  return rest;
 };

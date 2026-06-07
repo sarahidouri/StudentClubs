@@ -13,7 +13,8 @@ export const registerController = asyncHandler(async (req, res) => {
     lastName,
   });
 
-  await logActivity(user._id, 'create', 'user', user._id, 'User registered', req);
+  
+  logActivity(user._id, 'create', 'user', user._id, 'User registered', req).catch(console.error);
 
   res.status(201).json({
     success: true,
@@ -27,7 +28,8 @@ export const loginController = asyncHandler(async (req, res) => {
 
   const { user, token, refreshToken } = await userService.loginUser(email, password);
 
-  await logActivity(user._id, 'login', 'user', user._id, 'User logged in', req);
+  
+  logActivity(user._id, 'login', 'user', user._id, 'User logged in', req).catch(console.error);
 
   res.json({
     success: true,
@@ -37,11 +39,18 @@ export const loginController = asyncHandler(async (req, res) => {
 });
 
 export const getProfileController = asyncHandler(async (req, res) => {
+  if (!req.userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User ID missing in request'
+    });
+  }
+
   const user = await userService.getUserById(req.userId);
+  if (!user) return res.status(404).json({ success: false, message: 'User not found' });
 
   res.json({
     success: true,
-    message: 'Profile retrieved',
     data: user,
   });
 });
@@ -49,7 +58,8 @@ export const getProfileController = asyncHandler(async (req, res) => {
 export const updateProfileController = asyncHandler(async (req, res) => {
   const user = await userService.updateUser(req.userId, req.body);
 
-  await logActivity(req.userId, 'update', 'user', req.userId, 'Profile updated', req);
+  
+  logActivity(req.userId, 'update', 'user', req.userId, 'Profile updated', req).catch(console.error);
 
   res.json({
     success: true,

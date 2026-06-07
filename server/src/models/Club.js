@@ -14,16 +14,15 @@ const clubSchema = new mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ['sports', 'cultural', 'technical', 'academic', 'social', 'hobby', 'volunteer'],
       required: true,
     },
     logo: {
       type: String,
-      default: null,
+      default: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4',
     },
     coverImage: {
       type: String,
-      default: null,
+      default: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4',
     },
     manager: {
       type: mongoose.Schema.Types.ObjectId,

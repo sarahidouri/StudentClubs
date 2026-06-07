@@ -4,7 +4,9 @@ import { logActivity } from '../utils/activityLogger.js';
 import { paginate } from '../utils/queryHelpers.js';
 
 export const createClubController = asyncHandler(async (req, res) => {
-  const club = await clubService.createClub(req.body, req.userId);
+  
+  const managerId = req.body.managerId || req.userId;
+  const club = await clubService.createClub(req.body, managerId);
 
   await logActivity(
     req.userId,
@@ -23,20 +25,28 @@ export const createClubController = asyncHandler(async (req, res) => {
 });
 
 export const getClubController = asyncHandler(async (req, res) => {
-  const club = await clubService.getClubById(req.params.id);
+  try {
+    const club = await clubService.getClubById(req.params.id);
 
-  if (!club) {
-    return res.status(404).json({
+    if (!club) {
+      return res.status(404).json({
+        success: false,
+        message: 'Club not found',
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Club retrieved',
+      data: { club },
+    });
+  } catch (error) {
+    console.error('Error fetching club:', error.message);
+    return res.status(error.status || 500).json({
       success: false,
-      message: 'Club not found',
+      message: error.message || 'Failed to retrieve club',
     });
   }
-
-  res.json({
-    success: true,
-    message: 'Club retrieved',
-    data: club,
-  });
 });
 
 export const updateClubController = asyncHandler(async (req, res) => {
@@ -68,11 +78,13 @@ export const updateClubController = asyncHandler(async (req, res) => {
 export const getAllClubsController = asyncHandler(async (req, res) => {
   const pagination = paginate(req.query);
   const { category, search, isActive } = req.query;
+  const filters = { category, search };
 
-  const result = await clubService.getAllClubs(
-    { category, search, isActive: isActive === 'true' },
-    pagination
-  );
+  if (isActive !== undefined) {
+    filters.isActive = isActive === 'true';
+  }
+
+  const result = await clubService.getAllClubs(filters, pagination);
 
   res.json({
     success: true,
@@ -82,21 +94,21 @@ export const getAllClubsController = asyncHandler(async (req, res) => {
 });
 
 export const joinClubController = asyncHandler(async (req, res) => {
-  const club = await clubService.joinClub(req.params.id, req.userId);
+  const result = await clubService.joinClub(req.params.id, req.userId);
 
   await logActivity(
     req.userId,
     'join',
     'club',
-    club._id,
-    `Joined club: ${club.name}`,
+    result.club._id,
+    `Joined club: ${result.club.name}`,
     req
   );
 
   res.json({
     success: true,
     message: 'Joined club successfully',
-    data: club,
+    data: result,
   });
 });
 

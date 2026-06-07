@@ -1,4 +1,4 @@
-# CampusConnect Development Guide
+# StudentClubs Development Guide
 
 ## Getting Started with Development
 

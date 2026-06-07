@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon src/index.js --ignore 'src/uploads/*' --ignore 'uploads/*'",
+    "seed": "node src/utils/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["MERN", "university", "clubs", "community"],

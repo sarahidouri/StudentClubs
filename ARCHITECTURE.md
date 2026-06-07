@@ -1,6 +1,6 @@
 version: 1.0.0
 
-# CampusConnect Architecture Overview
+# StudentClubs Architecture Overview
 
 ## System Design
 
